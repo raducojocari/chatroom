@@ -60,7 +60,11 @@ io.on('connection', function(socket) {
 
 	socket.on('message', function(message) {
 		message.timestamp = moment().valueOf();
-		io.to(connectedUsers[socket.id].room).emit('message', message);
+		if (connectedUsers
+            && connectedUsers[socket.id]
+            && connectedUsers[socket.id].room) {
+            io.to(connectedUsers[socket.id].room).emit('message', message);
+        }
 	});
 
 	socket.emit('message', {
