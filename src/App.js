@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
 
-// import { io } from 'socket.io-client';
 
 var io = require('socket.io-client');
 const socket = io("http://localhost:3001");
