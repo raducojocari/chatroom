@@ -10,32 +10,29 @@ const tw = require('node-tweet-stream')(cfg);
 */
 function App() {    
     const socket = io("https://socketio-chatroom.herokuapp.com");
-    socket.on('connect', function() { 
-        console.log('connected');
+        socket.on('connect', function() { 
+            console.log('connected');
 
-        socket.emit('joinRoom', {
-            username: 'Bob',
-            room: 'react-coding'
-        }, function (data) {
-    
-            socket.emit('message', {
+            socket.emit('joinRoom', {
+                username: 'Bob',
+                room: 'react-coding'
+            }, function (data) {
+
+                socket.emit('message', {
                 username: 'Bob',
                 text: 'Your message goes here'
             });
-            
-            
+
+
+            });
+
         });
 
-     });
-    
-
-
-    return (        
+    return (
         <div className="App">
 
         </div>
     );
-    
 
 }
 
