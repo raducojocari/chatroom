@@ -1,4 +1,6 @@
 import React from 'react';
+import Login from './Login';
+import './Container.css';
 
 
 
@@ -6,9 +8,12 @@ import React from 'react';
 const Container = () => {
 
     return (
+        <div className="container">
+            <h1>container</h1>
 
-        <h1>container</h1>
-
+            <p>login/out below</p>
+            <Login />
+        </div>
     )
 
 

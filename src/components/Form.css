@@ -1,0 +1,36 @@
+.form {
+    background: lightskyblue;
+    align-content: flex-end;
+    display: inline-grid;
+
+    width: 300px;
+    padding: 10px 10px 0 10px;
+    font-size: 20px;
+    border: 2px solid grey;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    height: 500px;
+  }
+
+  .form_box {
+    display: flex;
+    overflow-y: scroll;
+    flex-direction: column;
+  }
+  
+  .form_box_blocks {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 20px;
+    background: lightblue;
+  }
+  
+  .form_box_blocks:nth-child(odd) {
+  
+    border-radius: 20px 20px 0 20px;
+  }
+  .form_box_blocks:nth-child(even) {
+    background:mediumblue;
+    color: white;
+    border-radius: 20px 20px 20px 0;
+  }

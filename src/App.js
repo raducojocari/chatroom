@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Login from './components/Login';
+import Container from './components/Container';
+import './App.css';
 
 var io = require('socket.io-client');
 const socket = io("http://localhost:3001");
@@ -29,9 +30,9 @@ function App() {
 
 
     return (
-        <div className="App">
+        <div className="app">
             <h1>app</h1>
-            <Login />
+            <Container />
         </div>
     );
 }
