@@ -1,13 +1,9 @@
 .form {
-    background: lightskyblue;
     align-content: flex-end;
     display: inline-grid;
 
-    width: 300px;
-    padding: 10px 10px 0 10px;
+    /* width: calc(100vw - 200px); */
     font-size: 20px;
-    border: 2px solid grey;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     height: 500px;
   }
 
@@ -26,11 +22,22 @@
   }
   
   .form_box_blocks:nth-child(odd) {
-  
+    align-self: flex-start;
     border-radius: 20px 20px 0 20px;
   }
   .form_box_blocks:nth-child(even) {
-    background:mediumblue;
+    align-self: flex-end;
+    background: lightgray;
     color: white;
     border-radius: 20px 20px 20px 0;
+  }
+  .form_input {
+    width: calc(100% - 25px);
+    border: 1px solid grey;
+    height: 50px;
+    font-size: 20px;
+    word-break: break-word;
+  }
+  .form_submit {
+      display: none;
   }

@@ -1,9 +1,42 @@
 .login {
     padding: 20px;
-    background: lightsalmon;
+    height: 520px; /* account for line height */
+    width: 100%;
+}
+.login_block {
+    width: auto;
+    max-width: 200px;    
+    display: flex;
+    flex-direction: column;
+}
+.login_button {
+    align-self: flex-end;
+}
+input {
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
 }
 
 .logout {
+    display: flex;
+    flex-direction: column;
+    /* width: calc(100vw - 200px); */
+    width: 100%;
+    flex-wrap: nowrap;
+}
+.logout_bar {
     padding: 20px;
     background: lightpink;
+    display: flex;
+    justify-content: space-between;
+}
+.logout_bar span {
+    line-height: 27px;
+}
+.logout_bar_button {
+    border: 1px solid darkgray;
+    background: lightgray;
+    padding: 5px 15px;
 }

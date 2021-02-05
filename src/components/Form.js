@@ -14,7 +14,6 @@ class Form extends React.Component {
 
 	mySubmitHandler = (event) => {
 		event.preventDefault();
-
 		this.renderNewMessage();
 	}
 
@@ -52,8 +51,6 @@ class Form extends React.Component {
 
 		return (
 			<>
-				<h1>Form here</h1>
-
 				<form onSubmit={this.mySubmitHandler} id="myForm" className="form">
 					<div id="form_box" className="form_box">
 						{this.state.itemArray.map((item, index) => {
@@ -64,14 +61,13 @@ class Form extends React.Component {
 					</div>
 					<div>
 						<input
+							id="form_input"
 							className="form_input"
 							type='text'
 							onChange={this.myChangeHandler}
 							placeholder="Enter message..."
 						/>
-						<input
-							type='submit'
-						/>
+						<input type='submit' className="form_submit"/>
 					</div>
 				</form>
 			</>

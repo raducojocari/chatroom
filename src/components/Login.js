@@ -29,8 +29,6 @@ const Login = () => {
         setUser(response.data)
         // store the user in localStorage
         localStorage.setItem("user", JSON.stringify(response.data));
-        console.log('111', response.data);
-
     };
 
     // logout the user
@@ -47,26 +45,29 @@ const Login = () => {
             <>
                 <form className="login" onSubmit={handleSubmitLogin}>
 
-                    <h1>login</h1>
-                    <label htmlFor="login_input_name">Enter Name:</label>
-                    <input
-                        id="login_input_name"
-                        type="text"
-                        value={username}
-                        placeholder="enter name"
-                        onChange={({ target }) => setUsername(target.value)}
-                    />
+                    <h1>Please log in:</h1>
+                    <div className="login_block">
+                        <label htmlFor="login_input_name">Enter Name:</label>
+                        <input
+                            id="login_input_name"
+                            type="text"
+                            value={username}
+                            placeholder="enter name"
+                            onChange={({ target }) => setUsername(target.value)}
+                        />
 
-                    <label htmlFor="login_input_password">Enter Password:</label>
-                    <input
-                        id="login_input_password"
-                        type="password"
-                        value={password}
-                        placeholder="enter password"
-                        onChange={({ target }) => setPassword(target.value)}
-                    />
+                        <label htmlFor="login_input_password">Enter Password:</label>
+                        <input
+                            id="login_input_password"
+                            type="password"
+                            value={password}
+                            placeholder="enter password"
+                            onChange={({ target }) => setPassword(target.value)}
+                        />
 
-                    <button type="submit">Login</button>
+                        <button type="submit" className="login_button">Login</button>                        
+                    </div>
+
                 </form>
             </>
         )
@@ -74,14 +75,18 @@ const Login = () => {
 
     if (user) {
         return (
-            <>
-                <div className="logout">
-                    <div>logged in</div>
-                    <button onClick={handleLogout}>logout</button>
+            <div className="logout">
+                <div className="logout_bar">
+                    <div>
+                        <span>Hi {user.username} ypou are logged in</span>
+                    </div>
+                    <div>
+                        <button onClick={handleLogout} className="logout_bar_button">logout</button>                        
+                    </div>
                 </div>
                 
                 <Form />
-            </>
+            </div>
         )
     };
 
