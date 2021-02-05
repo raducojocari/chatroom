@@ -33,7 +33,7 @@ io.on('connection', function(socket) {
 				}
 			});
 
-			if (nameTaken) {
+			if (false) {
 				callback({
 					nameAvailable: false,
 					error: 'Sorry this username is taken!'
@@ -46,6 +46,7 @@ io.on('connection', function(socket) {
 					text: req.username + ' has joined!',
 					timestamp: moment().valueOf()
 				});
+				console.log('Joined', {username:req.username, room: req.room})
 				callback({
 					nameAvailable: true
 				});
@@ -59,7 +60,9 @@ io.on('connection', function(socket) {
 	});
 
 	socket.on('message', function(message) {
+		console.log('Number of connected users', Object.keys(connectedUsers).length)
 		message.timestamp = moment().valueOf();
+		console.log('message log:', message);
 		if (connectedUsers
             && connectedUsers[socket.id]
             && connectedUsers[socket.id].room) {

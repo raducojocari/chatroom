@@ -1,9 +1,6 @@
 import React from 'react';
 import './Form.css';
 
-
-
-
 class Form extends React.Component {
 
 	constructor(props) {
@@ -15,6 +12,9 @@ class Form extends React.Component {
 	mySubmitHandler = (event) => {
 		event.preventDefault();
 		this.renderNewMessage();
+		if (this.state.message !== ''){
+			this.props.onMessageSend(this.state.message)
+		}
 	}
 
 	renderNewMessage = () => {
@@ -23,6 +23,7 @@ class Form extends React.Component {
 			item.push(
 				<>
 					{this.state.message}
+					<i onClick={this.remove}>*</i>
 				</>
 			)
 			this.setState({itemArray: item})
@@ -47,6 +48,17 @@ class Form extends React.Component {
 		this.setState({message: event.target.value});
 	}
 
+	remove = () => {
+		const item = this.state.itemArray;
+		item.pop(
+			<>
+				{this.state.message}
+				{this.id.index}
+				{console.log('1234', this.id.index)}
+			</>
+		)
+	}
+
 	render () {
 
 		return (
@@ -55,7 +67,7 @@ class Form extends React.Component {
 					<div id="form_box" className="form_box">
 						{this.state.itemArray.map((item, index) => {
 						return (
-							<div className="form_box_blocks" key={index}>{item}</div>
+							<div className="form_box_blocks" key={index} id={index}>{item}</div>
 						)
 						})}
 					</div>
@@ -66,6 +78,7 @@ class Form extends React.Component {
 							type='text'
 							onChange={this.myChangeHandler}
 							placeholder="Enter message..."
+							autoComplete="off"
 						/>
 						<input type='submit' className="form_submit"/>
 					</div>

@@ -21,7 +21,7 @@
     background: lightblue;
   }
   
-  .form_box_blocks:nth-child(odd) {
+  /* .form_box_blocks:nth-child(odd) {
     align-self: flex-start;
     border-radius: 20px 20px 0 20px;
   }
@@ -30,10 +30,10 @@
     background: lightgray;
     color: white;
     border-radius: 20px 20px 20px 0;
-  }
+  } */
   .form_input {
     width: calc(100% - 25px);
-    border: 1px solid grey;
+    border: 1px solid lightgrey;
     height: 50px;
     font-size: 20px;
     word-break: break-word;

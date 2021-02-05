@@ -26,6 +26,9 @@ input {
     width: 100%;
     flex-wrap: nowrap;
 }
+.login_input_name {
+    border: 1px solid grey;
+}
 .logout_bar {
     padding: 20px;
     background: lightpink;
