@@ -2,9 +2,6 @@ import React from 'react';
 import Login from './Login';
 import './Container.css';
 
-
-
-
 const Container = () => {
 
     return (
@@ -15,11 +12,6 @@ const Container = () => {
             <Login />
         </div>
     )
-
-
-}
-
-
-
+};
 
 export default Container;

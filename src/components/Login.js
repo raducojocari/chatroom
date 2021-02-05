@@ -1,98 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import Form from './Form';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { loginUser } from '../actions'; 
 import './Login.css';
 
-import axios from "axios";
+class LoginUser extends Component {
+    constructor() {
+        super();
+        this.state = {
+            username: ''
+        };
+    }
 
-const Login = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [user, setUser] = useState()
+    handleChange = (e) => {
+        this.setState({ username: e.target.value });
+    }
 
-    useEffect(() => {
-        const loggedInUser = localStorage.getItem("user");
-        if (loggedInUser) {
-        const foundUser = JSON.parse(loggedInUser);
-        setUser(foundUser);
-        }
-    }, []);
-
-    const handleSubmitLogin = async e => {
+    handleSubmitLogin = (e) => {
         e.preventDefault();
-        const user = { username, password };
-        // send the username and password to the server
-        const response = await axios.post(
-        "http://blogservice.herokuapp.com/api/login",
-        user
-        );
-        // set the state of the user
-        setUser(response.data)
-        // store the user in localStorage
-        localStorage.setItem("user", JSON.stringify(response.data));
-        console.log('111', response.data);
-
+        console.log('handleSubmitLogin:', this.state.username)
+        this.props.dispatch(loginUser(this.state.username));
     };
 
     // logout the user
-    const handleLogout = () => {
-        setUser({});
-        setUsername("");
-        setPassword("");
-        localStorage.clear();
+    handleLogout = () => {
+        //TODO - move out
+        // this.props.dispatch(logoutUser(this.state.username));
         window.location.reload();
     };
 
-    if (!user) {
+    render() {
         return (
-            <>
-                <form className="login" onSubmit={handleSubmitLogin}>
-
-                    <h1>login</h1>
-                    <label htmlFor="login_input_name">Enter Name:</label>
-                    <input
-                        id="login_input_name"
-                        type="text"
-                        value={username}
-                        placeholder="enter name"
-                        onChange={({ target }) => setUsername(target.value)}
-                    />
-
-                    <label htmlFor="login_input_password">Enter Password:</label>
-                    <input
-                        id="login_input_password"
-                        type="password"
-                        value={password}
-                        placeholder="enter password"
-                        onChange={({ target }) => setPassword(target.value)}
-                    />
-
-                    <button type="submit">Login</button>
-                </form>
-            </>
-        )
-    };
-
-    if (user) {
-        return (
-            <>
-                <div className="logout">
-                    <div>logged in</div>
-                    <button onClick={handleLogout}>logout</button>
-                </div>
-                
-                <Form />
-            </>
-        )
-    };
-
+                <>
+                    <form className="login" onSubmit={this.handleSubmitLogin}>
     
+                        <h1>login</h1>
+                        <label htmlFor="login_input_name">Enter Name:</label>
+                        <input
+                            id="login_input_name"
+                            type="text"
+                            value={this.state.username}
+                            onChange={this.handleChange.bind(this)}
+                            required
+                        />
+                        <button type="submit">Login</button>
+                    </form>
+                </>
+            )      
+    }
+};
 
+const mapStateToProps = (state) => ({
+});
 
-}
-
-
-// Login.propTypes = {
-//     setToken: PropTypes.func.isRequired
-// };
-
-export default Login;
+export default connect(mapStateToProps)(LoginUser);

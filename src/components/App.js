@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import Container from './components/Container';
+import React  from 'react';
+import { connect } from 'react-redux';
+import Container from './Container';
 import './App.css';
 
 var io = require('socket.io-client');
 const socket = io("http://localhost:3001");
 
-function App() {
+const App = () => {
 
     console.log("boo");
 
@@ -28,7 +29,6 @@ function App() {
         console.log('BOB received a message', message);
     });
 
-
     return (
         <div className="app">
             <h1>app</h1>
@@ -37,4 +37,8 @@ function App() {
     );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+    user: state.user
+});
+
+export default connect(mapStateToProps)(App);
