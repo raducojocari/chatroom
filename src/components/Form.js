@@ -14,26 +14,33 @@ class Form extends React.Component {
 
 	mySubmitHandler = (event) => {
 		event.preventDefault();
-
 		this.renderNewMessage();
 	}
 
 	renderNewMessage = () => {
 		const item = this.state.itemArray;
-		item.push(
-			<>
-			{this.state.message}
-			</>
-		)
-		this.setState({itemArray: item})
-
-		// this.updateScroll();
+		if (this.state.message !== '') {
+			item.push(
+				<>
+					{this.state.message}
+				</>
+			)
+			this.setState({itemArray: item})
+		}
 		this.clearForm();
+	}
+
+	scrollForm = () => {
+		setTimeout(() => {
+			let objDiv = document.getElementById("form_box");
+			objDiv.scrollTop = objDiv.scrollHeight;
+		}, 1)
 	}
 
 	clearForm = () => {
 		document.getElementById("myForm").reset(); 
 		this.setState({message: ''})
+		this.scrollForm();
 	}
 
 	myChangeHandler = (event) => {
@@ -44,10 +51,8 @@ class Form extends React.Component {
 
 		return (
 			<>
-				<h1>Form here</h1>
-
 				<form onSubmit={this.mySubmitHandler} id="myForm" className="form">
-					<div className="form_box">
+					<div id="form_box" className="form_box">
 						{this.state.itemArray.map((item, index) => {
 						return (
 							<div className="form_box_blocks" key={index}>{item}</div>
@@ -56,14 +61,13 @@ class Form extends React.Component {
 					</div>
 					<div>
 						<input
+							id="form_input"
 							className="form_input"
 							type='text'
 							onChange={this.myChangeHandler}
 							placeholder="Enter message..."
 						/>
-						<input
-							type='submit'
-						/>
+						<input type='submit' className="form_submit"/>
 					</div>
 				</form>
 			</>

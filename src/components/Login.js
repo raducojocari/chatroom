@@ -1,55 +1,45 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { loginUser } from '../actions'; 
-import './Login.css';
 
-class LoginUser extends Component {
-    constructor() {
-        super();
-        this.state = {
-            username: ''
-        };
+import './Login.css'
+
+export const Login = (props)=> {
+    console.log('props', props);
+
+    const [username, setUserName] = useState();
+    const dispatch = useDispatch();
+
+    const handleChange = (e) => {
+        setUserName(e.target.value);
     }
 
-    handleChange = (e) => {
-        this.setState({ username: e.target.value });
-    }
-
-    handleSubmitLogin = (e) => {
+    const handleSubmitLogin = (e) => {
         e.preventDefault();
-        console.log('handleSubmitLogin:', this.state.username)
-        this.props.dispatch(loginUser(this.state.username));
+        console.log('handleSubmitLogin:', username)
+        dispatch(loginUser(username));
     };
 
-    // logout the user
-    handleLogout = () => {
-        //TODO - move out
-        // this.props.dispatch(logoutUser(this.state.username));
-        window.location.reload();
-    };
+    return (
+        <>
+            <form className="login" onSubmit={(e)=>handleSubmitLogin(e)}>
 
-    render() {
-        return (
-                <>
-                    <form className="login" onSubmit={this.handleSubmitLogin}>
-    
-                        <h1>login</h1>
-                        <label htmlFor="login_input_name">Enter Name:</label>
-                        <input
-                            id="login_input_name"
-                            type="text"
-                            value={this.state.username}
-                            onChange={this.handleChange.bind(this)}
-                            required
-                        />
-                        <button type="submit">Login</button>
-                    </form>
-                </>
-            )      
-    }
-};
+                <h1>Please log in:</h1>
+                <div className="login_block">
+                    <label htmlFor="login_input_name">Enter Name:</label>
+                    <input
+                        id="login_input_name"
+                        className="login_input_name"
+                        type="text"
+                        placeholder="enter name"
+                        onChange={(e)=> handleChange(e)}
+                    />
+                    
+                    <button type="submit" className="login_button">Login</button>                        
+                </div>
 
-const mapStateToProps = (state) => ({
-});
+            </form>
+        </>
+    )
+}
 
-export default connect(mapStateToProps)(LoginUser);
