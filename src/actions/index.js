@@ -5,3 +5,11 @@ export const loginUser = (user) => {
         payload: user
     };
 };
+
+export const receiveMessage = (message, room) => {
+    console.log('receiveMessage', message, room)
+    return {
+        type: "MESSAGE_RECEIVED",
+        payload: {...message, room }
+    };
+};
