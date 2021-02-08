@@ -8,8 +8,10 @@ import ConnectedRoomComponent from "./RoomComponent";
 var io = require("socket.io-client");
 
 const Container = ({ username }) => {
-  const defaultRoom = "room1";
+  let defaultRoom = "room1";
+//   let newRoom = roomName;
   const [sockets, setSockets] = useState({});
+  const [roomName, setRoomName] = useState(defaultRoom);
 
 
   const textForm = (room) => {
@@ -40,7 +42,7 @@ const Container = ({ username }) => {
 		  );
       }
     } else {
-		//fuck knwos....
+		//who knwos....
     }
     const selectedSocket = sockets[username];
     if (selectedSocket) {
@@ -76,11 +78,17 @@ const Container = ({ username }) => {
   const shouldShowLoginComponent = () =>
     !username && <Login username={username} />;
 
+  const onRoomChange = (roomName) => {
+	  setRoomName(roomName);
+      console.log('one', roomName)
+  };
+
   return (
     <div className="container">
-      <Nav />
+      <Nav onRoomChange={onRoomChange} />
       {shouldShowLoginComponent()}
-      {textForm(defaultRoom)}
+      {textForm(roomName)}
+      {console.log('three jsx', roomName)}
     </div>
   );
  

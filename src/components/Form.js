@@ -34,11 +34,11 @@ console.log('form props', props)
 		// dispatch new acction to deelte message
 	}
 
-	userStyle = () => {
-		render (
-			<div><
-		)
-	}
+	// userStyle = () => {
+	// 	return (
+	// 		<div></div>
+	// 	)
+	// }
 
 	return (
 
@@ -47,11 +47,17 @@ console.log('form props', props)
 				<div id="form_box" className="form_box">
 					{props.message.map((m, index) => {
 					return (
-						<div className="form_box_blocks" key={index} id={m.username + index}>
+						<div key={index} id={m.username + index}>
 							<>
-								{m.text}
+							<span>
 								{m.username}
-								{m.timestamp}
+							</span>
+							<span className="form_box_blocks">
+								{m.text}
+								<span>
+									{m.timestamp}
+								</span>
+							</span>
 								{/* <a onClick={()=>{remove}}>&#10005;</a> */}
 							</>
 						</div>

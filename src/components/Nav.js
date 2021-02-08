@@ -1,20 +1,23 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { receiveMessage } from "../actions/index.js";
+
 import './Nav.css';
 
 
-const Nav = () => {
+const Nav = ({onRoomChange}) => {
 
-return (
-    <div className="nav">
-        <ul>
-            <li>link 1</li>
-            <li>link 2</li>
-            <li>link 3</li>
-            <li>link 4</li>
-            <li>link 5</li>
-        </ul>
-    </div>
-)
+
+    return (
+        <div className="nav">
+            <ul>
+                <li><button onClick={() => {onRoomChange('Room 1')}}>Room 1</button></li>
+                <li><button onClick={() => {onRoomChange('Room 2')}}>Room 2</button></li>
+                <li><button onClick={() => {onRoomChange('Room 3')}}>Room 3</button></li>
+                <li><button onClick={() => {onRoomChange('Room 4')}}>Room 4</button></li>
+            </ul>
+        </div>
+    )
 
 }
 
