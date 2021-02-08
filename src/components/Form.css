@@ -19,6 +19,8 @@
     margin: 10px 0;
     border-radius: 20px;
     background: lightblue;
+    justify-content: space-between;
+    display: flex;
   }
   
   /* .form_box_blocks:nth-child(odd) {

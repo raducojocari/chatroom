@@ -1,32 +1,16 @@
 import React from "react";
+import { connect } from "react-redux";
 import Form from "./Form.js";
+import { useDispatch } from 'react-redux';
+import { receiveMessage } from "../actions/index.js";
 
-var io = require("socket.io-client");
 
-export const RoomComponent = ({ username, room }) => {
-  const socket = io("http://localhost:3001");
+export const RoomComponent = ({ username, room, socket, messages }) => {
 
-  socket.on("connect", function () {
-    console.log("connected to socket");
-    socket.emit(
-      "joinRoom",
-      {
-        username: username,
-        room: room,
-      },
-      function (data) {
-        console.log(data);
-        if (data && data.nameAvailable) {
-          console.log("Connected to room - OK");
-        } else {
-          console.log("ERROR. Cant connect to room. username already taken");
-        }
-      }
-    );
-  });
-
+  const dispatch = useDispatch();
   socket.on("message", function (message) {
     console.log("Received a message", message);
+    dispatch(receiveMessage(message, room));
   });
 
   const onMessageSend = (textMessage) => {
@@ -55,7 +39,17 @@ export const RoomComponent = ({ username, room }) => {
         </div>
       </div>
 
-      <Form onMessageSend={onMessageSend} />
+      <Form onMessageSend={onMessageSend} message={messages} />
     </div>
   );
 };
+
+
+const mapStateToProps = (state, ownProps) => {
+  console.log('mapStateToProps', state.messages[ownProps.room])
+  return {
+    messages: state.messages[ownProps.room]
+  }
+};
+
+export default connect(mapStateToProps)(RoomComponent);

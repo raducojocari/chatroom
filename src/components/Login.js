@@ -33,6 +33,7 @@ export const Login = (props)=> {
                         type="text"
                         placeholder="enter name"
                         onChange={(e)=> handleChange(e)}
+                        autoComplete="off"
                     />
                     
                     <button type="submit" className="login_button">Login</button>                        

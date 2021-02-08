@@ -1,92 +1,77 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Form.css';
 
-class Form extends React.Component {
-
-	constructor(props) {
-		super(props);
-		this.state = { message: '' };
-		this.state = { itemArray: []};
-	}
-
-	mySubmitHandler = (event) => {
+const Form = (props)=> {
+console.log('form props', props)
+	const [currentMessage, setCurrentMessage]= useState();
+	const mySubmitHandler = (event) => {
 		event.preventDefault();
-		this.renderNewMessage();
-		if (this.state.message !== ''){
-			this.props.onMessageSend(this.state.message)
+		if (currentMessage !== ''){
+			props.onMessageSend(currentMessage)
 		}
+		clearForm();
 	}
 
-	renderNewMessage = () => {
-		const item = this.state.itemArray;
-		if (this.state.message !== '') {
-			item.push(
-				<>
-					{this.state.message}
-					<i onClick={this.remove}>*</i>
-				</>
-			)
-			this.setState({itemArray: item})
-		}
-		this.clearForm();
-	}
 
-	scrollForm = () => {
+	const scrollForm = () => {
 		setTimeout(() => {
 			let objDiv = document.getElementById("form_box");
 			objDiv.scrollTop = objDiv.scrollHeight;
 		}, 1)
 	}
 
-	clearForm = () => {
+	const clearForm = () => {
 		document.getElementById("myForm").reset(); 
-		this.setState({message: ''})
-		this.scrollForm();
+		setCurrentMessage('')
+		scrollForm();
 	}
 
-	myChangeHandler = (event) => {
-		this.setState({message: event.target.value});
+	const myChangeHandler = (event) => {
+		setCurrentMessage(event.target.value);
 	}
 
-	remove = () => {
-		const item = this.state.itemArray;
-		item.pop(
-			<>
-				{this.state.message}
-				{this.id.index}
-				{console.log('1234', this.id.index)}
-			</>
+	const remove = () => {
+		// dispatch new acction to deelte message
+	}
+
+	userStyle = () => {
+		render (
+			<div><
 		)
 	}
 
-	render () {
+	return (
 
-		return (
-			<>
-				<form onSubmit={this.mySubmitHandler} id="myForm" className="form">
-					<div id="form_box" className="form_box">
-						{this.state.itemArray.map((item, index) => {
-						return (
-							<div className="form_box_blocks" key={index} id={index}>{item}</div>
-						)
-						})}
-					</div>
-					<div>
-						<input
-							id="form_input"
-							className="form_input"
-							type='text'
-							onChange={this.myChangeHandler}
-							placeholder="Enter message..."
-							autoComplete="off"
-						/>
-						<input type='submit' className="form_submit"/>
-					</div>
-				</form>
-			</>
-		);
-
-	}
+		<>
+			<form onSubmit={mySubmitHandler} id="myForm" className="form">
+				<div id="form_box" className="form_box">
+					{props.message.map((m, index) => {
+					return (
+						<div className="form_box_blocks" key={index} id={m.username + index}>
+							<>
+								{m.text}
+								{m.username}
+								{m.timestamp}
+								{/* <a onClick={()=>{remove}}>&#10005;</a> */}
+							</>
+						</div>
+					)
+					})}
+				</div>
+				<div>
+					<input
+						id="form_input"
+						className="form_input"
+						type='text'
+						onChange={myChangeHandler}
+						placeholder="Enter message..."
+						autoComplete="off"
+					/>
+					<input type='submit' className="form_submit"/>
+				</div>
+			</form>
+		</>
+	);
 
 }
 
