@@ -1,21 +1,18 @@
+import {receiveMessage} from './actions';
+
+
 var io = require("socket.io-client");
 
-export const socketMapping =
-{
-    'room1': socket1,
-    'room1': socket1,
-    'room1': socket1,
-    'room1': socket1,
-}
+const socketMapping = {};
 
-export const GetSocket = (username, room) => {
+export const getSocket = (dispatch, username, room) => {
     if (!socketMapping[room]) {
-        return createNewSocket(username, room);
+        return createNewSocket(dispatch, username, room);
     }
     return socketMapping[room];
 }
 
-export const createNewSocket = (username, room) => {
+const createNewSocket = (dispatch, username, room) => {
     console.log('creating a socket for ', username);
     const socket = io("http://localhost:3001");
 
@@ -26,6 +23,7 @@ export const createNewSocket = (username, room) => {
             {
                 username: username,
                 room: room,
+                // socket: {id: socket.id}
             },
             function (data) {
                 console.log(data);
@@ -36,17 +34,19 @@ export const createNewSocket = (username, room) => {
                 }
             }
         );
+
     });
 
     socket.on("message", function (message) {
         console.log("socketManager", { id: socket.id, message });
-        // dispatch(receiveMessage(message, room));
+        dispatch(receiveMessage(message, room));
     });
 
     socket.on("disconnect", () => {
         console.log(socket.connected); // false
     });
 
-    sockets.push(socket); //TODO
+    socketMapping[room] = socket;
     return socket;
+
 };

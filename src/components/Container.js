@@ -1,26 +1,26 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import Nav from "./Nav";
 import { Login } from "./Login";
 import "./Container.css";
 import ConnectedRoomComponent from "./RoomComponent";
 
-import { createNewSocket } from '../socketManager';
+import { getSocket } from '../socketManager';
 
 var io = require("socket.io-client");
 
 const Container = ({ username }) => {
-  let defaultRoom = "room1";
+  let defaultRoom = "Room 1";
   const [sockets, setSockets] = useState({});
   const [roomName, setRoomName] = useState(defaultRoom);
 
-
+  const dispatch = useDispatch();
   const textForm = (room) => {
     if (username && room) {
       if (sockets[username] && sockets[username][room]) {
         let currentSocket = sockets[username][room];
         if (!currentSocket) {
-          currentSocket = createNewSocket(username, room);
+          currentSocket = getSocket(dispatch, username, room);
         }
         console.log("currentSocket", currentSocket);
 
@@ -33,7 +33,7 @@ const Container = ({ username }) => {
         );
 
       } else {
-        let currentSocket = createNewSocket(username, room);
+        let currentSocket = getSocket(dispatch, username, room);
         setSockets({ [username]: { [room]: currentSocket } });
         return (
           <ConnectedRoomComponent
@@ -51,31 +51,6 @@ const Container = ({ username }) => {
       console.log("username", selectedSocket.username);
     }
   };
-
-  // const createNewSocket = (username, room) => {
-  //   console.log('creating a socket for ', username);
-  //   const socket = io("http://localhost:3001");
-
-  //   socket.on("connect", function () {
-  //     console.log("connected to socket");
-  //     socket.emit(
-  //       "joinRoom",
-  //       {
-  //         username: username,
-  //         room: room,
-  //       },
-  //       function (data) {
-  //         console.log(data);
-  //         if (data && data.nameAvailable) {
-  //           console.log("Connected to room - OK");
-  //         } else {
-  //           console.log("ERROR. Cant connect to room. username already taken");
-  //         }
-  //       }
-  //     );
-  //   });
-  //   return socket;
-  // };
 
   const shouldShowLoginComponent = () =>
     !username && <Login username={username} />;

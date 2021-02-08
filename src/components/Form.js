@@ -49,14 +49,14 @@ console.log('form props', props)
 					return (
 						<div key={index} id={m.username + index}>
 							<>
-							<span>
+							<span className="form_box_name">
 								{m.username}
 							</span>
 							<span className="form_box_blocks">
-								{m.text}
-								<span>
+								<span className="form_box_time">
 									{m.timestamp}
 								</span>
+								<p>{m.text}</p>
 							</span>
 								{/* <a onClick={()=>{remove}}>&#10005;</a> */}
 							</>

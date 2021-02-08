@@ -1,6 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { receiveMessage } from "../actions/index.js";
 
 import './Nav.css';
 

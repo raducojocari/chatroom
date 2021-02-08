@@ -16,7 +16,7 @@ io.on('connection', function(socket) {
 			io.to(userData.room).emit('message', {
 				username: 'System',
 				text: userData.username + ' has left!',
-				timestamp: moment().valueOf()
+				timestamp: new Date().toUTCString()
 			});
 			delete connectedUsers[socket.id];
 		}
@@ -44,7 +44,7 @@ io.on('connection', function(socket) {
 				socket.broadcast.to(req.room).emit('message', {
 					username: 'System',
 					text: req.username + ' has joined!',
-					timestamp: moment().valueOf()
+					timestamp: new Date().toUTCString()
 				});
 				console.log('Joined', {username:req.username, room: req.room})
 				callback({
@@ -61,7 +61,7 @@ io.on('connection', function(socket) {
 
 	socket.on('message', function(message) {
 		console.log('Number of connected users', Object.keys(connectedUsers).length)
-		message.timestamp = moment().valueOf();
+		message.timestamp = new Date().toUTCString();
 		console.log('message log:', message);
 		if (connectedUsers
             && connectedUsers[socket.id]
@@ -73,7 +73,7 @@ io.on('connection', function(socket) {
 	socket.emit('message', {
 		username: 'System',
 		text: 'Hey there! Ask someone to join this chat room to start talking.',
-		timestamp: moment().valueOf()
+		timestamp: new Date().toUTCString()
 	});
 
 });
