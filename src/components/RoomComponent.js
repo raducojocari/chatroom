@@ -17,29 +17,29 @@ export const RoomComponent = ({ username, room, socket, messages }) => {
 		console.log("I wrote:", textMessage);
 
 		socket.emit("message", {
-		username: username,
-		text: textMessage,
+			username: username,
+			text: textMessage,
 		});
 	};
 	return (
 		<div className="logout">
-		<div className="logout_bar">
-			<div>
-			<span>
-				Hi {username} you are logged in {room}
-			</span>
-			</div>
-			<div>
-			<button
-				//   onClick={(e) => handleLogout(e)}
-				className="logout_bar_button"
-			>
-				logout
+			<div className="logout_bar">
+				<div>
+					<span>
+						Hi {username} you are logged in {room}
+					</span>
+				</div>
+				<div>
+					<button
+						//   onClick={(e) => handleLogout(e)}
+						className="logout_bar_button"
+					>
+						logout
 			</button>
+				</div>
 			</div>
-		</div>
 
-		<Form onMessageSend={onMessageSend} message={messages} />
+			<Form onMessageSend={onMessageSend} message={messages} />
 		</div>
 	);
 };

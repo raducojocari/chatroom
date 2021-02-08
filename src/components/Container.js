@@ -5,11 +5,12 @@ import { Login } from "./Login";
 import "./Container.css";
 import ConnectedRoomComponent from "./RoomComponent";
 
+import { createNewSocket } from '../socketManager';
+
 var io = require("socket.io-client");
 
 const Container = ({ username }) => {
   let defaultRoom = "room1";
-//   let newRoom = roomName;
   const [sockets, setSockets] = useState({});
   const [roomName, setRoomName] = useState(defaultRoom);
 
@@ -18,9 +19,9 @@ const Container = ({ username }) => {
     if (username && room) {
       if (sockets[username] && sockets[username][room]) {
         let currentSocket = sockets[username][room];
-		if(!currentSocket){
-			currentSocket = createNewSocket(username,room);
-		}
+        if (!currentSocket) {
+          currentSocket = createNewSocket(username, room);
+        }
         console.log("currentSocket", currentSocket);
 
         return (
@@ -30,19 +31,20 @@ const Container = ({ username }) => {
             socket={currentSocket}
           />
         );
+
       } else {
-		let currentSocket = createNewSocket(username,room);
-        setSockets({[username]:{[room]:currentSocket}});
-		return (
-			<ConnectedRoomComponent
-			  username={username}
-			  room={room}
-			  socket={currentSocket}
-			/>
-		  );
+        let currentSocket = createNewSocket(username, room);
+        setSockets({ [username]: { [room]: currentSocket } });
+        return (
+          <ConnectedRoomComponent
+            username={username}
+            room={room}
+            socket={currentSocket}
+          />
+        );
       }
     } else {
-		//who knwos....
+      //who knows....
     }
     const selectedSocket = sockets[username];
     if (selectedSocket) {
@@ -50,37 +52,37 @@ const Container = ({ username }) => {
     }
   };
 
-  const createNewSocket = (username, room) => {
-	  console.log('creating a socket for ', username);
-    const socket = io("http://localhost:3001");
+  // const createNewSocket = (username, room) => {
+  //   console.log('creating a socket for ', username);
+  //   const socket = io("http://localhost:3001");
 
-    socket.on("connect", function () {
-      console.log("connected to socket");
-      socket.emit(
-        "joinRoom",
-        {
-          username: username,
-          room: room,
-        },
-        function (data) {
-          console.log(data);
-          if (data && data.nameAvailable) {
-            console.log("Connected to room - OK");
-          } else {
-            console.log("ERROR. Cant connect to room. username already taken");
-          }
-        }
-      );
-    });
-    return socket;
-  };
+  //   socket.on("connect", function () {
+  //     console.log("connected to socket");
+  //     socket.emit(
+  //       "joinRoom",
+  //       {
+  //         username: username,
+  //         room: room,
+  //       },
+  //       function (data) {
+  //         console.log(data);
+  //         if (data && data.nameAvailable) {
+  //           console.log("Connected to room - OK");
+  //         } else {
+  //           console.log("ERROR. Cant connect to room. username already taken");
+  //         }
+  //       }
+  //     );
+  //   });
+  //   return socket;
+  // };
 
   const shouldShowLoginComponent = () =>
     !username && <Login username={username} />;
 
   const onRoomChange = (roomName) => {
-	  setRoomName(roomName);
-      console.log('one', roomName)
+    setRoomName(roomName);
+    console.log('one', roomName)
   };
 
   return (
@@ -91,7 +93,7 @@ const Container = ({ username }) => {
       {console.log('three jsx', roomName)}
     </div>
   );
- 
+
 };
 
 const mapStateToProps = (state) => ({
