@@ -1,10 +1,4 @@
 const initState = {
-    'room1':[
-        {username:'',
-        text:'Welcome to this room!',
-        room:'room1',
-        timestamp:''}
-    ]
 }
   
 export default function messagesReducer(state = initState, action) {

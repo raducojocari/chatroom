@@ -30,9 +30,9 @@ console.log('form props', props)
 		setCurrentMessage(event.target.value);
 	}
 
-	const remove = () => {
+	// const remove = () => {
 		// dispatch new acction to deelte message
-	}
+	// }
 
 	// userStyle = () => {
 	// 	return (

@@ -19,7 +19,6 @@ export const RoomComponent = ({ username, room, socket, messages }) => {
 	socket.on("message", function (message) {
 		console.log("Received a message", message);
 		dispatch(receiveMessage(message, room));
-
 		scrollForm();
 	});
 
@@ -42,7 +41,7 @@ export const RoomComponent = ({ username, room, socket, messages }) => {
 		<div className="logout">
 			<div className="logout_bar">
 				<span>
-					Hi {username} you are logged in {room}
+					Hi {username}! You are logged in {room}
 				</span>
 				<div>
 					<button

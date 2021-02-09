@@ -7,8 +7,6 @@ import ConnectedRoomComponent from "./RoomComponent";
 
 import { getSocket } from '../socketManager';
 
-var io = require("socket.io-client");
-
 	const Container = ({ username }) => {
 		let defaultRoom = "Room 1";
 		const [sockets, setSockets] = useState({});
