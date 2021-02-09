@@ -22,7 +22,9 @@
     border-radius: 5px;
     border: none;
     font-size: 16px;
+    color: #5a5888;
     box-shadow: 0 2px 2px -2px #809bf5, inset 0 3px 1px -2px #fff;
+    text-shadow: 0 1px 1px #fff;
 }
 input {
     margin: 10px 0;
@@ -61,5 +63,7 @@ input {
     border-radius: 5px;
     border: none;
     font-size: 16px;
+    color: #5a5888;
     box-shadow: 0 2px 2px -2px #809bf5, inset 0 3px 1px -2px #fff;
+    text-shadow: 0 1px 1px #fff;
 }
