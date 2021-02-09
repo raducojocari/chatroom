@@ -3,9 +3,17 @@ import { connect } from "react-redux";
 import Form from "./Form.js";
 import { useDispatch } from 'react-redux';
 import { receiveMessage } from "../actions/index.js";
+import { loginUser } from '../actions'; 
 
 
 export const RoomComponent = ({ username, room, socket, messages }) => {
+
+	
+	const handleLogout = (e) => {
+        e.preventDefault();
+        console.log('handleLogout:', username)
+        dispatch(loginUser(''));
+    };
 
 	const dispatch = useDispatch();
 	socket.on("message", function (message) {
@@ -38,7 +46,7 @@ export const RoomComponent = ({ username, room, socket, messages }) => {
 				</span>
 				<div>
 					<button
-						//   onClick={(e) => handleLogout(e)}
+						  onClick={(e) => handleLogout(e)}
 						className="logout_bar_button"
 					>
 						logout
