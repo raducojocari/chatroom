@@ -1,69 +1,86 @@
-import React from "react";
-import { connect } from "react-redux";
-import Form from "./Form.js";
-import { useDispatch } from 'react-redux';
-import { receiveMessage } from "../actions/index.js";
-import { loginUser } from '../actions'; 
+import React from 'react';
+import { connect, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 
+import Form from './Form';
+import { receiveMessage, loginUser } from '../actions/index';
 
-export const RoomComponent = ({ username, room, socket, messages }) => {
+export const RoomComponent = ({
+  username, room, socket, messages,
+}) => {
+  const scrollForm = () => {
+    setTimeout(() => {
+      const objDiv = document.getElementById('form_box');
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }, 10);
+  };
 
-	
-	const handleLogout = (e) => {
-        e.preventDefault();
-        console.log('handleLogout:', username)
-		dispatch(loginUser(''));
-    };
+  const dispatch = useDispatch();
+  socket.on('message', (message) => {
+    dispatch(receiveMessage(message, room));
+    scrollForm();
+  });
 
-	const dispatch = useDispatch();
-	socket.on("message", function (message) {
-		console.log("Received a message", message);
-		dispatch(receiveMessage(message, room));
-		scrollForm();
-	});
+  const handleLogout = (e) => {
+    e.preventDefault();
+    console.log('handleLogout:', username);
+    dispatch(loginUser(''));
+  };
 
-	const scrollForm = () => {
-		setTimeout(() => {
-			let objDiv = document.getElementById("form_box");
-			objDiv.scrollTop = objDiv.scrollHeight;
-		}, 10)
-	}
+  const onMessageSend = (textMessage) => {
+    console.log('I wrote:', textMessage);
 
-	const onMessageSend = (textMessage) => {
-		console.log("I wrote:", textMessage);
+    socket.emit('message', {
+      username,
+      text: textMessage,
+    });
+  };
 
-		socket.emit("message", {
-			username: username,
-			text: textMessage,
-		});
-	};
-	return (
-		<div className="logout">
-			<div className="logout_bar">
-				<span>
-					Hi {username}! You are logged in {room}
-				</span>
-				<div>
-					<button
-						  onClick={(e) => handleLogout(e)}
-						className="logout_bar_button"
-					>
-						logout
-			</button>
-				</div>
-			</div>
-
-			<Form onMessageSend={onMessageSend} message={messages} />
-		</div>
-	);
+  return (
+    <div className="logout">
+      <div className="logout_bar">
+        <span>
+          Hi
+          {' '}
+          {username}
+          ! You are logged in
+          {' '}
+          {room}
+        </span>
+        <div>
+          <button
+            type="button"
+            onClick={(e) => handleLogout(e)}
+            className="logout_bar_button"
+          >
+            logout
+          </button>
+        </div>
+      </div>
+      <Form onMessageSend={onMessageSend} message={messages} />
+    </div>
+  );
 };
 
+RoomComponent.defaultProps = {
+  username: '',
+  room: '',
+  socket: {},
+  messages: [],
+};
+
+RoomComponent.propTypes = {
+  username: PropTypes.string,
+  room: PropTypes.string,
+  socket: PropTypes.object,
+  messages: PropTypes.array,
+};
 
 const mapStateToProps = (state, ownProps) => {
-	console.log('mapStateToProps', state.messages[ownProps.room])
-	return {
-		messages: state.messages[ownProps.room] || []
-	}
+  console.log('mapStateToProps', state.messages[ownProps.room]);
+  return {
+    messages: state.messages[ownProps.room] || [],
+  };
 };
 
 export default connect(mapStateToProps)(RoomComponent);

@@ -1,6 +1,6 @@
-export function loginUser(data) {
-    return {
-        type: "LOGIN_USER",
-        payload: data
-    };
-}
+// export function loginUser(data) {
+//   return {
+//     type: 'LOGIN_USER',
+//     payload: data,
+//   };
+// }

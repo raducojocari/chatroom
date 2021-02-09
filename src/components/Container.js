@@ -1,75 +1,82 @@
-import React, { useState } from "react";
-import { connect, useDispatch } from "react-redux";
-import Nav from "./Nav";
-import { Login } from "./Login";
-import "./Container.css";
-import ConnectedRoomComponent from "./RoomComponent";
+import React, { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { getSocket } from '../socketManager';
+import Nav from './Nav';
+import Login from './Login';
+import './Container.css';
+import ConnectedRoomComponent from './RoomComponent';
 
-	const Container = ({ username }) => {
-		let defaultRoom = "Room 1";
-		const [sockets, setSockets] = useState({});
-		const [roomName, setRoomName] = useState(defaultRoom);
+import getSocket from '../socketManager';
 
-		const dispatch = useDispatch();
-		const textForm = (room) => {
+const Container = ({ username }) => {
+  const defaultRoom = 'Room 1';
+  const [sockets, setSockets] = useState({});
+  const [roomName, setRoomName] = useState(defaultRoom);
 
-		if (username && room) {
-			if (sockets[username] && sockets[username][room]) {
-				let currentSocket = sockets[username][room];
-				if (!currentSocket) {
-					currentSocket = getSocket(dispatch, username, room);
-				}
-				console.log("currentSocket", currentSocket);
+  const dispatch = useDispatch();
 
-				return (
-					<ConnectedRoomComponent
-					username={username}
-					room={room}
-					socket={currentSocket}
-					/>
-				);
+  const textForm = (room) => {
+    if (username && room) {
+      if (sockets[username] && sockets[username][room]) {
+        let currentSocket = sockets[username][room];
+        if (!currentSocket) {
+          currentSocket = getSocket(dispatch, username, room);
+        }
+        console.log('currentSocket', currentSocket);
 
-			} else {
-				let currentSocket = getSocket(dispatch, username, room);
-				setSockets({ [username]: { [room]: currentSocket } });
-				return (
-					<ConnectedRoomComponent
-					username={username}
-					room={room}
-					socket={currentSocket}
-					/>
-				);
-			}
-		} else {
-			//who knows....
-		}
-		const selectedSocket = sockets[username];
-		if (selectedSocket) {
-			console.log("username", selectedSocket.username);
-		}
-	};
+        return (
+          <ConnectedRoomComponent
+            username={username}
+            room={room}
+            socket={currentSocket}
+          />
+        );
+      }
+      const currentSocket = getSocket(dispatch, username, room);
+      setSockets({ [username]: { [room]: currentSocket } });
+      return (
+        <ConnectedRoomComponent
+          username={username}
+          room={room}
+          socket={currentSocket}
+        />
+      );
+    }
+    // who knows....
 
-	const shouldShowLoginComponent = () =>
-    !username && <Login username={username} />;
+    const selectedSocket = sockets[username];
+    if (selectedSocket) {
+      console.log('username', selectedSocket.username);
+    }
+    return room;
+  };
 
-	const onRoomChange = (roomName) => {
-		setRoomName(roomName);
-	};
+  const shouldShowLoginComponent = () => !username && <Login username={username} />;
 
-	return (
-		<div className="container">
-			<Nav onRoomChange={onRoomChange} activeRoom={username && roomName} />
-			{shouldShowLoginComponent()}
-			{textForm(roomName)}
-		</div>
-	);
+  const onRoomChange = (room) => {
+    setRoomName(room);
+  };
 
+  return (
+    <div className="container">
+      <Nav onRoomChange={onRoomChange} activeRoom={username && roomName} />
+      {shouldShowLoginComponent()}
+      {textForm(roomName)}
+    </div>
+  );
+};
+
+Container.defaultProps = {
+  username: '',
+};
+
+Container.propTypes = {
+  username: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
-	username: state.login.username,
+  username: state.login.username,
 });
 
 export default connect(mapStateToProps)(Container);
