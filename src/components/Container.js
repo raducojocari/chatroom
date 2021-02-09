@@ -62,7 +62,7 @@ var io = require("socket.io-client");
 
 	return (
 		<div className="container">
-			<Nav onRoomChange={onRoomChange} />
+			<Nav onRoomChange={onRoomChange} activeRoom={roomName} />
 			{shouldShowLoginComponent()}
 			{textForm(roomName)}
 		</div>

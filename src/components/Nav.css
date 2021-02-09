@@ -16,3 +16,8 @@
     font-size: 18px;
     text-shadow: 0 1px 1px #fff
 }
+
+.activeClass {
+    background: #809bf5;
+    color: #fff;
+}

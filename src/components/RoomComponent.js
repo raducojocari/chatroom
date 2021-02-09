@@ -12,7 +12,7 @@ export const RoomComponent = ({ username, room, socket, messages }) => {
 	const handleLogout = (e) => {
         e.preventDefault();
         console.log('handleLogout:', username)
-        dispatch(loginUser(''));
+		dispatch(loginUser(''));
     };
 
 	const dispatch = useDispatch();
