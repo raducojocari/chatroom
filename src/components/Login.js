@@ -18,7 +18,20 @@ export const Login = (props)=> {
         e.preventDefault();
         console.log('handleSubmitLogin:', username)
         dispatch(loginUser(username));
+        fireRooms();
     };
+
+    const fireRooms =() => {
+        var roomAreas = document.getElementsByClassName("nav_button");
+        setTimeout(() => {
+            for (var i = 0; i < roomAreas.length; i++) {
+                roomAreas[i].click();
+            }   
+        }, 100);
+        setTimeout(() => {
+            document.getElementById('nav_button').click();
+        }, 100);
+    }
 
     return (
         <>
@@ -42,4 +55,3 @@ export const Login = (props)=> {
         </>
     )
 }
-

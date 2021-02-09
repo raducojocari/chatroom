@@ -63,6 +63,7 @@
     height: 50px;
     font-size: 20px;
     word-break: break-word;
+    color: #5a5888;
   }
   .form_submit {
       display: none;
