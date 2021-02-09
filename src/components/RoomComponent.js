@@ -11,7 +11,16 @@ export const RoomComponent = ({ username, room, socket, messages }) => {
 	socket.on("message", function (message) {
 		console.log("Received a message", message);
 		dispatch(receiveMessage(message, room));
+
+		scrollForm();
 	});
+
+	const scrollForm = () => {
+		setTimeout(() => {
+			let objDiv = document.getElementById("form_box");
+			objDiv.scrollTop = objDiv.scrollHeight;
+		}, 10)
+	}
 
 	const onMessageSend = (textMessage) => {
 		console.log("I wrote:", textMessage);

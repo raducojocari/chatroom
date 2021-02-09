@@ -17,7 +17,7 @@ console.log('form props', props)
 		setTimeout(() => {
 			let objDiv = document.getElementById("form_box");
 			objDiv.scrollTop = objDiv.scrollHeight;
-		}, 1)
+		}, 10)
 	}
 
 	const clearForm = () => {
@@ -47,7 +47,7 @@ console.log('form props', props)
 				<div id="form_box" className="form_box">
 					{props.message.map((m, index) => {
 					return (
-						<div key={index} id={m.username + index}>
+						<div key={index} id={index}>
 							<>
 							<span className="form_box_name">
 								{m.username}
