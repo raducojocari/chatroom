@@ -33,11 +33,9 @@ export const RoomComponent = ({ username, room, socket, messages }) => {
 	return (
 		<div className="logout">
 			<div className="logout_bar">
-				<div>
-					<span>
-						Hi {username} you are logged in {room}
-					</span>
-				</div>
+				<span>
+					Hi {username} you are logged in {room}
+				</span>
 				<div>
 					<button
 						//   onClick={(e) => handleLogout(e)}

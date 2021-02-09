@@ -23,9 +23,8 @@ export const Login = (props)=> {
     return (
         <>
             <form className="login" onSubmit={(e)=>handleSubmitLogin(e)}>
-
-                <h1>Please log in:</h1>
                 <div className="login_block">
+                <h1>Please log in:</h1>
                     <label htmlFor="login_input_name">Enter Name:</label>
                     <input
                         id="login_input_name"

@@ -57,7 +57,6 @@ const Container = ({ username }) => {
 
   const onRoomChange = (roomName) => {
     setRoomName(roomName);
-    console.log('one', roomName)
   };
 
   return (
@@ -65,7 +64,6 @@ const Container = ({ username }) => {
       <Nav onRoomChange={onRoomChange} />
       {shouldShowLoginComponent()}
       {textForm(roomName)}
-      {console.log('three jsx', roomName)}
     </div>
   );
 

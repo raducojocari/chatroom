@@ -1,10 +1,13 @@
 .form {
     align-content: flex-end;
     display: inline-grid;
-
-    /* width: calc(100vw - 200px); */
+    background: #d5d4ed;
     font-size: 20px;
     height: 500px;
+    padding: 0 10px;
+    border-left: 1px solid #809bf5;
+
+    box-shadow: 0 2px 2px -2px #809bf5, inset 3px 3px 1px -2px #fff;
   }
 
   .form_box {
@@ -22,19 +25,21 @@
     align-items: flex-end;
     color: white;
     font-weight: lighter;
-    font-size: 12px;
+    font-size: 11px;
     align-self: flex-end;
     margin-right: 20px;
   }
   .form_box_blocks {
     flex-direction: column;
     width: 80%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 20px;
-    background: lightblue;
+    padding: 10px 10px 25px;
+    margin: 0 0 10px 0;
+    border-radius: 5px;
+    background: #809bf5;
     justify-content: space-between;
     display: flex;
+    color: #fff;
+    box-shadow: inset 0px 0px 1px 0px #5a5888;  
   }
   .form_box_blocks p {
     margin: 5px 0;

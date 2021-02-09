@@ -1,4 +1,15 @@
 .nav {
-    padding: 10px;
-    width: 200px;
+    background: #5a5888;
+    padding-top: 88px;
+    width: 300px;
+}
+.nav_button {
+    width: 100%;
+    height: 75px;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 1px solid #5a5888;
+    box-shadow: 0 2px 2px -2px #809bf5, inset 0 3px 1px -2px #fff;
+    background: #d5d4ed;
 }
