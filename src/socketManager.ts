@@ -3,16 +3,16 @@ import { receiveMessage } from './actions';
 
 const io = require('socket.io-client');
 
-const socketMapping = {};
+const socketMapping:any = {};
 
-const getSocket = (dispatch, username, room) => {
+const getSocket = (dispatch:any, username:string, room:string) => {
   if (!socketMapping[room]) {
     return createNewSocket(dispatch, username, room);
   }
   return socketMapping[room];
 };
 
-const createNewSocket = (dispatch, username, room) => {
+const createNewSocket = (dispatch:any, username:string, room:string) => {
   console.log('creating a socket for ', username);
   const socket = io('http://localhost:3001');
 
@@ -25,7 +25,7 @@ const createNewSocket = (dispatch, username, room) => {
         room,
         // socket: {id: socket.id}
       },
-      (data) => {
+      (data:any) => {
         console.log(data);
         if (data && data.nameAvailable) {
           console.log('Connected to room - OK');
@@ -36,7 +36,7 @@ const createNewSocket = (dispatch, username, room) => {
     );
   });
 
-  socket.on('message', (message) => {
+  socket.on('message', (message:string) => {
     console.log('socketManager', { id: socket.id, message });
     dispatch(receiveMessage(message, room));
   });
