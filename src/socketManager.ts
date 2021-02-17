@@ -36,7 +36,7 @@ const createNewSocket = (dispatch:any, username:string, room:string) => {
     );
   });
 
-  socket.on('message', (message:string) => {
+  socket.on('message', (message:any) => {
     console.log('socketManager', { id: socket.id, message });
     dispatch(receiveMessage(message, room));
   });
