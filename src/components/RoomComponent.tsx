@@ -7,27 +7,29 @@ import { receiveMessage, loginUser } from '../actions/index';
 
 export const RoomComponent = ({
   username, room, socket, messages,
-}) => {
+}:any) => {
   const scrollForm = () => {
     setTimeout(() => {
       const objDiv = document.getElementById('form_box');
-      objDiv.scrollTop = objDiv.scrollHeight;
+      if(objDiv){
+        objDiv.scrollTop = objDiv.scrollHeight;
+      }
     }, 10);
   };
 
   const dispatch = useDispatch();
-  socket.on('message', (message) => {
+  socket.on('message', (message:any) => {
     dispatch(receiveMessage(message, room));
     scrollForm();
   });
 
-  const handleLogout = (e) => {
+  const handleLogout = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     console.log('handleLogout:', username);
     dispatch(loginUser(''));
   };
 
-  const onMessageSend = (textMessage) => {
+  const onMessageSend = (textMessage:string) => {
     console.log('I wrote:', textMessage);
 
     socket.emit('message', {
@@ -76,7 +78,7 @@ RoomComponent.propTypes = {
   messages: PropTypes.array,
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state:any, ownProps:any) => {
   console.log('mapStateToProps', state.messages[ownProps.room]);
   return {
     messages: state.messages[ownProps.room] || [],
