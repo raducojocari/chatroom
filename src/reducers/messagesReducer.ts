@@ -1,7 +1,9 @@
-const initState = {
+import { MessageState, ReceivedMessageAction } from "../types";
+
+const initState:MessageState = {
 };
 
-export default function messagesReducer(state = initState, action) {
+export default function messagesReducer(state = initState, action:ReceivedMessageAction):MessageState {
   if (action.type === 'MESSAGE_RECEIVED') {
     const newState = { ...state };
     if (!newState[action.payload.room]) {

@@ -1,16 +1,15 @@
-/* eslint-disable no-constant-condition */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-param-reassign */
-const PORT = process.env.PORT || 3001;
-const express = require('express');
+import * as expressFn from 'express';
+import * as socketio from 'socket.io';
 
-const app = express();
+const app = expressFn();
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const io = socketio(http);
 
-const connectedUsers = {};
+const PORT = process.env.PORT || 3001;
 
-io.on('connection', (socket) => {
+const connectedUsers:any = {};
+
+io.on('connection', (socket:any) => {
   console.log('A user is connected.');
 
   socket.on('disconnect', () => {
@@ -26,7 +25,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('joinRoom', (req, callback) => {
+  socket.on('joinRoom', (req:any, callback:any) => {
     if (req.room.replace(/\s/g, '').length > 0 && req.username.replace(/\s/g, '').length > 0) {
       let nameTaken = false;
 
@@ -37,24 +36,18 @@ io.on('connection', (socket) => {
         }
       });
 
-      if (false) {
-        callback({
-          nameAvailable: false,
-          error: 'Sorry this username is taken!',
-        });
-      } else {
-        connectedUsers[socket.id] = req;
-        socket.join(req.room);
-        socket.broadcast.to(req.room).emit('message', {
-          username: 'System',
-          text: `${req.username} has joined!`,
-          timestamp: new Date().toUTCString(),
-        });
-        console.log('Joined', { username: req.username, room: req.room });
-        callback({
-          nameAvailable: true,
-        });
-      }
+      connectedUsers[socket.id] = req;
+      socket.join(req.room);
+      socket.broadcast.to(req.room).emit('message', {
+        username: 'System',
+        text: `${req.username} has joined!`,
+        timestamp: new Date().toUTCString(),
+      });
+      console.log('Joined', { username: req.username, room: req.room });
+      callback({
+        nameAvailable: true,
+      });
+
     } else {
       callback({
         nameAvailable: false,
@@ -63,7 +56,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('message', (message) => {
+  socket.on('message', (message:any) => {
     console.log('Number of connected users', Object.keys(connectedUsers).length);
     message.timestamp = new Date().toUTCString();
     console.log('message log:', message);

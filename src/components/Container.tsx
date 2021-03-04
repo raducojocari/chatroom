@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import Nav from './Nav';
 import Login from './Login';
@@ -8,15 +7,18 @@ import './Container.css';
 import ConnectedRoomComponent from './RoomComponent';
 
 import getSocket from '../socketManager';
+import { State } from '../types';
 
-const Container = ({ username }) => {
+type SocketState = {[key:string]:{[key:string]:SocketIOClient.Socket}}
+
+const Container = ({ username }:{username:string}) => {
   const defaultRoom = 'Room 1';
-  const [sockets, setSockets] = useState({});
+  const [sockets, setSockets] = useState<SocketState>({});
   const [roomName, setRoomName] = useState(defaultRoom);
 
   const dispatch = useDispatch();
 
-  const textForm = (room) => {
+  const textForm = (room:string) => {
     if (username && room) {
       if (sockets[username] && sockets[username][room]) {
         let currentSocket = sockets[username][room];
@@ -29,6 +31,7 @@ const Container = ({ username }) => {
           <ConnectedRoomComponent
             username={username}
             room={room}
+
             socket={currentSocket}
           />
         );
@@ -52,9 +55,9 @@ const Container = ({ username }) => {
     return room;
   };
 
-  const shouldShowLoginComponent = () => !username && <Login username={username} />;
+  const shouldShowLoginComponent = () => !username && <Login/>;
 
-  const onRoomChange = (room) => {
+  const onRoomChange = (room:string) => {
     setRoomName(room);
   };
 
@@ -67,15 +70,7 @@ const Container = ({ username }) => {
   );
 };
 
-Container.defaultProps = {
-  username: '',
-};
-
-Container.propTypes = {
-  username: PropTypes.string,
-};
-
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state:State) => ({
   username: state.login.username,
 });
 

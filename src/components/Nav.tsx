@@ -1,9 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
 import './Nav.css';
 
-const Nav = ({ onRoomChange, activeRoom }) => (
+const Nav = ({ onRoomChange, activeRoom }:{onRoomChange:(room:string)=>void,activeRoom:string}) => (
   <div className="nav">
     <button
       type="button"
@@ -41,14 +39,5 @@ const Nav = ({ onRoomChange, activeRoom }) => (
   </div>
 );
 
-Nav.defaultProps = {
-  onRoomChange: '',
-  activeRoom: '',
-};
-
-Nav.propTypes = {
-  onRoomChange: PropTypes.func,
-  activeRoom: PropTypes.string,
-};
 
 export default Nav;

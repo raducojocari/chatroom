@@ -1,24 +1,25 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import { Message } from '../types';
 import './Form.css';
 
-const Form = ({ message, onMessageSend }) => {
-  const [currentMessage, setCurrentMessage] = useState();
+const Form = ({ message, onMessageSend }: { message: Message[], onMessageSend: (message:string)=>void }) => {
+  const [currentMessage, setCurrentMessage] = useState('');
 
   const scrollForm = () => {
     setTimeout(() => {
       const objDiv = document.getElementById('form_box');
-      objDiv.scrollTop = objDiv.scrollHeight;
+      if (objDiv) {
+        objDiv.scrollTop = objDiv.scrollHeight;
+      }
     }, 10);
   };
   const clearForm = () => {
-    document.getElementById('myForm').reset();
+    (document.getElementById('myForm') as HTMLFormElement).reset();
     setCurrentMessage('');
     scrollForm();
   };
 
-  const mySubmitHandler = (event) => {
+  const mySubmitHandler = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     if (currentMessage !== '') {
       onMessageSend(currentMessage);
@@ -26,27 +27,17 @@ const Form = ({ message, onMessageSend }) => {
     clearForm();
   };
 
-  const myChangeHandler = (event) => {
+  const myChangeHandler = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setCurrentMessage(event.target.value);
   };
-
-  //   const remove = () => {
-  //   dispatch new acction to deelte message
-  //   }
-
-  //   userStyle = () => {
-  //   return (
-  //   <div></div>
-  //   )
-  //   }
 
   return (
 
     <>
       <form onSubmit={mySubmitHandler} id="myForm" className="form">
         <div id="form_box" className="form_box">
-          {message.map((m, index) => (
-            <div key={index} id={index}>
+          {message.map((m: Message, index: number) => (
+            <div key={index} id={`${index}`}>
               <>
                 <span className="form_box_name">
                   {m.username}

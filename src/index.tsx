@@ -3,8 +3,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, compose } from 'redux';
 import { Provider } from 'react-redux';
-import App from './components/App';
+import {App} from './components/App';
 import rootReducer from './reducers';
+
+type reduxDevTools={__REDUX_DEVTOOLS_EXTENSION__: typeof compose}
+
+declare let window:Window & reduxDevTools;
 
 const enhancers = compose(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),

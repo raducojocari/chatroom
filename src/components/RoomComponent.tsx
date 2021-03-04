@@ -1,33 +1,40 @@
 import React from 'react';
 import { connect, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import Form from './Form';
 import { receiveMessage, loginUser } from '../actions/index';
+import { Message, State } from '../types';
+
+type RoomProps= { username: string, room: string, socket: SocketIOClient.Socket};
+type StateProps = {messages:Message[]};
+
+type PropType = RoomProps & StateProps;
 
 export const RoomComponent = ({
   username, room, socket, messages,
-}) => {
+}:PropType)  => {
   const scrollForm = () => {
     setTimeout(() => {
       const objDiv = document.getElementById('form_box');
-      objDiv.scrollTop = objDiv.scrollHeight;
+      if (objDiv) {
+        objDiv.scrollTop = objDiv.scrollHeight;
+      }
     }, 10);
   };
 
   const dispatch = useDispatch();
-  socket.on('message', (message) => {
+  socket.on('message', (message: Message) => {
     dispatch(receiveMessage(message, room));
     scrollForm();
   });
 
-  const handleLogout = (e) => {
+  const handleLogout = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     console.log('handleLogout:', username);
     dispatch(loginUser(''));
   };
 
-  const onMessageSend = (textMessage) => {
+  const onMessageSend = (textMessage: string) => {
     console.log('I wrote:', textMessage);
 
     socket.emit('message', {
@@ -62,21 +69,7 @@ export const RoomComponent = ({
   );
 };
 
-RoomComponent.defaultProps = {
-  username: '',
-  room: '',
-  socket: {},
-  messages: [],
-};
-
-RoomComponent.propTypes = {
-  username: PropTypes.string,
-  room: PropTypes.string,
-  socket: PropTypes.object,
-  messages: PropTypes.array,
-};
-
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state: State, ownProps: RoomProps) => {
   console.log('mapStateToProps', state.messages[ownProps.room]);
   return {
     messages: state.messages[ownProps.room] || [],

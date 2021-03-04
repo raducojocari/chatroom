@@ -4,13 +4,12 @@ import { loginUser } from '../actions';
 
 import './Login.css';
 
-const Login = (props) => {
-  console.log('props', props);
+const Login = () => {
 
-  const [username, setUserName] = useState();
+  const [username, setUserName] = useState('');
   const dispatch = useDispatch();
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value);
   };
 
@@ -18,15 +17,16 @@ const Login = (props) => {
     const roomAreas = document.getElementsByClassName('nav_button');
     setTimeout(() => {
       for (let i = 0; i < roomAreas.length; i++) {
-        roomAreas[i].click();
+        const currentRoom = roomAreas[i] as HTMLElement;
+        currentRoom.click();
       }
     }, 100);
     setTimeout(() => {
-      document.getElementById('nav_button').click();
+      document.getElementById('nav_button')?.click();
     }, 100);
   };
 
-  const handleSubmitLogin = (e) => {
+  const handleSubmitLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('handleSubmitLogin:', username);
     dispatch(loginUser(username));
