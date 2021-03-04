@@ -13,6 +13,11 @@ export interface Message {
     text:string;
 }
 
+export interface State{
+    login: LoginState,
+    messages: MessageState
+  }
+
 export const LOGIN_USER_ACTION = 'LOGIN_USER';
 export const MESSAGE_RECEIVED_ACTION = 'MESSAGE_RECEIVED';
 

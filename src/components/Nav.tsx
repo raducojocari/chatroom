@@ -1,7 +1,7 @@
 import React from 'react';
 import './Nav.css';
 
-const Nav = ({ onRoomChange, activeRoom }:{onRoomChange:any,activeRoom:string}) => (
+const Nav = ({ onRoomChange, activeRoom }:{onRoomChange:(room:string)=>void,activeRoom:string}) => (
   <div className="nav">
     <button
       type="button"

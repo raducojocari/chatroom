@@ -1,18 +1,21 @@
 /* eslint-disable no-use-before-define */
 import { receiveMessage } from './actions';
 
-const io = require('socket.io-client');
+import * as io from 'socket.io-client';
+import { Dispatch } from 'redux';
+import { ChatActionTypes, Message } from './types';
 
-const socketMapping:any = {};
+type joinRoomResponse={nameAvailable:boolean};
+const socketMapping:{[key:string]:SocketIOClient.Socket}={};
 
-const getSocket = (dispatch:any, username:string, room:string) => {
+const getSocket = (dispatch:Dispatch<ChatActionTypes>, username:string, room:string):SocketIOClient.Socket => {
   if (!socketMapping[room]) {
     return createNewSocket(dispatch, username, room);
   }
   return socketMapping[room];
 };
 
-const createNewSocket = (dispatch:any, username:string, room:string) => {
+const createNewSocket = (dispatch:Dispatch<ChatActionTypes>, username:string, room:string):SocketIOClient.Socket => {
   console.log('creating a socket for ', username);
   const socket = io('http://localhost:3001');
 
@@ -25,7 +28,7 @@ const createNewSocket = (dispatch:any, username:string, room:string) => {
         room,
         // socket: {id: socket.id}
       },
-      (data:any) => {
+      (data:joinRoomResponse) => {
         console.log(data);
         if (data && data.nameAvailable) {
           console.log('Connected to room - OK');
@@ -36,7 +39,7 @@ const createNewSocket = (dispatch:any, username:string, room:string) => {
     );
   });
 
-  socket.on('message', (message:any) => {
+  socket.on('message', (message:Message) => {
     console.log('socketManager', { id: socket.id, message });
     dispatch(receiveMessage(message, room));
   });

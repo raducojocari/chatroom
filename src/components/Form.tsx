@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { Message } from '../types';
 import './Form.css';
 
-const Form = ({ message, onMessageSend }: { message: any, onMessageSend: any }) => {
+const Form = ({ message, onMessageSend }: { message: Message[], onMessageSend: (message:string)=>void }) => {
   const [currentMessage, setCurrentMessage] = useState('');
 
   const scrollForm = () => {
@@ -35,8 +36,8 @@ const Form = ({ message, onMessageSend }: { message: any, onMessageSend: any }) 
     <>
       <form onSubmit={mySubmitHandler} id="myForm" className="form">
         <div id="form_box" className="form_box">
-          {message.map((m: any, index: string) => (
-            <div key={index} id={index}>
+          {message.map((m: Message, index: number) => (
+            <div key={index} id={`${index}`}>
               <>
                 <span className="form_box_name">
                   {m.username}

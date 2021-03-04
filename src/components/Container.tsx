@@ -7,10 +7,13 @@ import './Container.css';
 import ConnectedRoomComponent from './RoomComponent';
 
 import getSocket from '../socketManager';
+import { State } from '../types';
+
+type SocketState = {[key:string]:{[key:string]:SocketIOClient.Socket}}
 
 const Container = ({ username }:{username:string}) => {
   const defaultRoom = 'Room 1';
-  const [sockets, setSockets] = useState<any>({});
+  const [sockets, setSockets] = useState<SocketState>({});
   const [roomName, setRoomName] = useState(defaultRoom);
 
   const dispatch = useDispatch();
@@ -28,6 +31,7 @@ const Container = ({ username }:{username:string}) => {
           <ConnectedRoomComponent
             username={username}
             room={room}
+
             socket={currentSocket}
           />
         );
@@ -51,7 +55,7 @@ const Container = ({ username }:{username:string}) => {
     return room;
   };
 
-  const shouldShowLoginComponent = () => !username && <Login username={username} />;
+  const shouldShowLoginComponent = () => !username && <Login/>;
 
   const onRoomChange = (room:string) => {
     setRoomName(room);
@@ -66,7 +70,7 @@ const Container = ({ username }:{username:string}) => {
   );
 };
 
-const mapStateToProps = (state:any) => ({
+const mapStateToProps = (state:State) => ({
   username: state.login.username,
 });
 

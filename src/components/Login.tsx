@@ -4,8 +4,7 @@ import { loginUser } from '../actions';
 
 import './Login.css';
 
-const Login = (props: any) => {
-  console.log('props', props);
+const Login = () => {
 
   const [username, setUserName] = useState('');
   const dispatch = useDispatch();
